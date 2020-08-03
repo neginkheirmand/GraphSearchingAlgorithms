@@ -1,22 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
 
 public class HamiltonianCycle {
     private int n, m;
     int[][] referenceMatrix;
+    ArrayList<Integer[]>hamiltonianCycleContainer;
 
-    public HamiltonianCycle(int n, int m){
-        this.n=n;
-        this.m=m;
+    public HamiltonianCycle(int n, int m) {
+        this.n = n;
+        this.m = m;
+        hamiltonianCycleContainer = new ArrayList<>();
         makeGraph();
     }
 
-    public void printHamiltonianCycles(){
-        ArrayList<Integer[]> hamiltonianCycles = new ArrayList<>();
-        Integer[] cylce = new Integer[n*m];
-
-    }
 
     public void makeGraph(){
         referenceMatrix = new int[n*m][n*m];
@@ -61,9 +60,15 @@ public class HamiltonianCycle {
                 return;
             }else if(k==(n*m)-1){
                 for(int i=0; i<n*m; i++) {
-                    System.out.printf("%d ", x[i]);
+                    System.out.printf("\033[0;31m"+"%d "+"\033[0m", x[i]);
                 }
                 System.out.println();
+
+                Integer[] container = new Integer[n*m];
+                for(int y=0; y<n*m; y++){
+                    container[y]=x[y];
+                }
+                hamiltonianCycleContainer.add(container);
                 return;
             }else {
                 hamiltonian(k+1, x);
@@ -73,48 +78,27 @@ public class HamiltonianCycle {
 
     public void nextVertex(int k, int[] x) {
         //k >= 1 surely
-        System.out.println("came here for k = "+k);
-        System.out.println("enter with x:");
-        for(int i=0; i<n*m; i++) {
-            System.out.printf("%d ", x[i]);
-        }
-        System.out.println();
         int sizePath = n * m;
         do {
             x[k] = (x[k] + 1) % (sizePath + 1);
-//            System.out.println("gonna try with"+x[k]);
             if (x[k] == 0) {
-                System.out.println("invalid because x[k] is 0 :");
-                for(int i=0; i<n*m; i++) {
-                    System.out.printf("%d ", x[i]);
-                }
-                System.out.println();
                 return;
             }
             //there is an edge between this vertex and the one before this one
             if (referenceMatrix[x[k - 1] - 1][x[k] - 1] == 1) {
-//                System.out.println("its edge");
                 //no repetitive values in the array
                 boolean repet = false;
                 for (int i = 0; i < k; i++) {
                     if (x[i] == x[k]) {
                         repet = true;
-//                        System.out.println("repeted");
                         break;
                     }
                 }
                 if (!repet) {
                     if (k + 1 < sizePath || (k == sizePath - 1 && referenceMatrix[x[k]][x[0]] == 1)) {
-                        System.out.println("come out with x:");
-                        for(int i=0; i<n*m; i++) {
-                            System.out.printf("%d ", x[i]);
-                        }
-                        System.out.println();
                         return;
                     }
                 }
-//            }else{
-//                System.out.println("not edge");
             }
         } while (true);
     }
@@ -136,16 +120,19 @@ public class HamiltonianCycle {
     }
 
     public static void main(String[] args) {
-//        HamiltonianCycle ham = new HamiltonianCycle(4, 4);
-//        System.out.println("gonna call the method for the hamiltonian graph");
-//        int[]x = new int[]{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-////        int[]x = new int[]{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-//        ham.hamiltonian(1, x);
-//        System.out.println("print in main");
-//        for(int i=0; i<16; i++) {
-//            System.out.printf("%d ", x[i]);
-//        }
+        HamiltonianCycle ham = new HamiltonianCycle(4, 4);
+        int[]x = new int[]{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        Date bef = new Date();
+        ham.hamiltonian(1, x);
+        Date aft = new Date();
+        System.out.println("How much did it take? : "+(aft.getTime()-bef.getTime()));
+        System.out.println("print in main");
 
-        System.out.println("\n15 and 16 are neighbors?"+Cell.isNeighbor(15, 16, 4, 4));
+        for(int i=0; i<ham.hamiltonianCycleContainer.size(); i++) {
+            for(int j=0; j<ham.n*ham.m; j++) {
+                System.out.printf("%d ", ham.hamiltonianCycleContainer.get(i)[j]);
+            }
+            System.out.println();
+        }
     }
 }

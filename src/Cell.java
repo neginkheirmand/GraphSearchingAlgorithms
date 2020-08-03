@@ -9,24 +9,28 @@ public class Cell {
 
         //first we check if its upper neighbor
         if(numCell>m){
+//            System.out.println(1);
             //might be the upper neighbor
             if(numCell-m==neighbor){
                 return true;
             }
         }
         if(numCell<=(n-1)*m){
+//            System.out.println(2);
             //might be the downSide neighbor
             if(numCell+m==neighbor){
                 return true;
             }
         }
-        if((numCell%m)>1){
+        if((numCell%m)!=1){
+//            System.out.println(3);
             //might be the left side neighbor
             if(numCell-neighbor==1){
                 return true;
             }
         }
         if(numCell%m!=0){
+//            System.out.println(4);
             //might be the right side neighbor
             if(neighbor-numCell==1) {
                 return true;
