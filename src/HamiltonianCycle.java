@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class HamiltonianCycle {
     private int n, m;
     int[][] referenceMatrix;
-    ArrayList<Integer[]>hamiltonianCycleContainer;
+    ArrayList<Integer[]> hamiltonianCycleContainer;
 
     public HamiltonianCycle(int n, int m) {
         this.n = n;
@@ -17,33 +17,33 @@ public class HamiltonianCycle {
     }
 
 
-    public void makeGraph(){
-        referenceMatrix = new int[n*m][n*m];
-        for(int i=1; i<=n*m; i++){
-            for(int j=1; j<=n*m ; j++){
-                if(i==j){
-                    referenceMatrix[i-1][j-1]=0;
-                }else{
-                    if(Cell.isNeighbor(i,j, n, m)){
-                        referenceMatrix[i-1][j-1]=1;
-                    }else {
-                        referenceMatrix[i-1][j-1]=0;
+    public void makeGraph() {
+        referenceMatrix = new int[n * m][n * m];
+        for (int i = 1; i <= n * m; i++) {
+            for (int j = 1; j <= n * m; j++) {
+                if (i == j) {
+                    referenceMatrix[i - 1][j - 1] = 0;
+                } else {
+                    if (Cell.isNeighbor(i, j, n, m)) {
+                        referenceMatrix[i - 1][j - 1] = 1;
+                    } else {
+                        referenceMatrix[i - 1][j - 1] = 0;
                     }
                 }
             }
         }
 
-        for(int i=0; i<n*m; i++){
-            if(i==0){
-                System.out.println("\033[0;31m"+"   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20   agar ke n=4 va m=5"+"\033[0m");
+        for (int i = 0; i < n * m; i++) {
+            if (i == 0) {
+                System.out.println("\033[0;31m" + "   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20   agar ke n=4 va m=5" + "\033[0m");
             }
-            if(i<9){
+            if (i < 9) {
                 System.out.printf(" ");
             }
-            System.out.printf("\033[0;31m%d \033[0m", i+1);
-            for(int j=0; j<n*m; j++) {
+            System.out.printf("\033[0;31m%d \033[0m", i + 1);
+            for (int j = 0; j < n * m; j++) {
                 System.out.printf("%d ", referenceMatrix[i][j]);
-                if(j>=9){
+                if (j >= 9) {
                     System.out.printf(" ");
                 }
             }
@@ -52,28 +52,29 @@ public class HamiltonianCycle {
 
     }
 
-    public void hamiltonian(int k, int[] x){
+    public void hamiltonian(int k, int[] x) {
         //since i dont know where the start point will be, just let it be set in the function calling hamiltonian method
-        do{
+        do {
             nextVertex(k, x);
-            if(x[k]==0){
+            if (x[k] == 0) {
                 return;
-            }else if(k==(n*m)-1){
-                for(int i=0; i<n*m; i++) {
-                    System.out.printf("\033[0;31m"+"%d "+"\033[0m", x[i]);
+            } else if (k == (n * m) - 1) {
+                System.out.println("ended");
+                for (int i = 0; i < n * m; i++) {
+                    System.out.printf("\033[0;31m" + "%d " + "\033[0m", x[i]);
                 }
                 System.out.println();
 
-                Integer[] container = new Integer[n*m];
-                for(int y=0; y<n*m; y++){
-                    container[y]=x[y];
+                Integer[] container = new Integer[n * m];
+                for (int y = 0; y < n * m; y++) {
+                    container[y] = x[y];
                 }
                 hamiltonianCycleContainer.add(container);
                 return;
-            }else {
-                hamiltonian(k+1, x);
+            } else {
+                hamiltonian(k + 1, x);
             }
-        }while(true);
+        } while (true);
     }
 
     public void nextVertex(int k, int[] x) {
@@ -95,7 +96,7 @@ public class HamiltonianCycle {
                     }
                 }
                 if (!repet) {
-                    if (k + 1 < sizePath || (k == sizePath - 1 && referenceMatrix[x[k]][x[0]] == 1)) {
+                    if (k + 1 < sizePath || (k == sizePath - 1 /*&& referenceMatrix[x[k] - 1][x[0] - 1] == 1*/ ) ) {
                         return;
                     }
                 }
@@ -103,11 +104,7 @@ public class HamiltonianCycle {
         } while (true);
     }
 
-    public void visualize(int[] cycle){
-
-    }
-
-    public static void drawMap(){
+    public static void drawMap() {
         JFrame map = new JFrame("Game Map");
         map.setPreferredSize(new Dimension(100, 100));
         map.setMinimumSize(new Dimension(100, 100));
@@ -120,16 +117,20 @@ public class HamiltonianCycle {
     }
 
     public static void main(String[] args) {
-        HamiltonianCycle ham = new HamiltonianCycle(4, 4);
-        int[]x = new int[]{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        HamiltonianCycle ham = new HamiltonianCycle(3, 5);
+        int[] x = new int[15];
+        x[0]=1;
+        for(int i=1; i<15; i++){
+            x[i]=0;
+        }
         Date bef = new Date();
         ham.hamiltonian(1, x);
         Date aft = new Date();
-        System.out.println("How much did it take? : "+(aft.getTime()-bef.getTime()));
+        System.out.println("How much did it take? : " + (aft.getTime() - bef.getTime()));
         System.out.println("print in main");
 
-        for(int i=0; i<ham.hamiltonianCycleContainer.size(); i++) {
-            for(int j=0; j<ham.n*ham.m; j++) {
+        for (int i = 0; i < ham.hamiltonianCycleContainer.size(); i++) {
+            for (int j = 0; j < ham.n * ham.m; j++) {
                 System.out.printf("%d ", ham.hamiltonianCycleContainer.get(i)[j]);
             }
             System.out.println();
