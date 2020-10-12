@@ -1,5 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -63,7 +61,7 @@ public class HamiltonianCycle {
             if (x[k] == 0) {
                 return;
             } else if (k == (n * m) - 1) {
-                System.out.println("ended");
+//                System.out.println("ended");
                 for (int i = 0; i < n * m; i++) {
                     System.out.printf("\033[0;31m" + "%d " + "\033[0m", x[i]);
                 }
@@ -109,10 +107,16 @@ public class HamiltonianCycle {
     }
 
     public static void main(String[] args) {
-        HamiltonianCycle ham = new HamiltonianCycle(4, 5);
-        int[] x = new int[20];
+        int n, m;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("enter the rows");
+        n = scan.nextInt();
+        System.out.println("enter the number of columns");
+        m = scan.nextInt();
+        HamiltonianCycle ham = new HamiltonianCycle(n, m);
+        int[] x = new int[n*m];
         x[0]=1;
-        for(int i=1; i<20; i++){
+        for(int i=1; i<n*m; i++){
             x[i]=0;
         }
         Date bef = new Date();
@@ -121,6 +125,7 @@ public class HamiltonianCycle {
         System.out.println("How much did it take? : " + (aft.getTime() - bef.getTime())+"ms");
         System.out.println("print in main");
 
+        System.out.println("all the hamiltonian paths found in a grid like graph with "+n+" rows and "+m+" columns:\n(in order of the house num visited -house num= index+1-)");
         for (int i = 0; i < ham.hamiltonianCycleContainer.size(); i++) {
             for (int j = 0; j < ham.n * ham.m; j++) {
                 System.out.printf("%d ", ham.hamiltonianCycleContainer.get(i)[j]);
