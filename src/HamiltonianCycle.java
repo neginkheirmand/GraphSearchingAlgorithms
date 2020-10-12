@@ -108,18 +108,6 @@ public class HamiltonianCycle {
         } while (true);
     }
 
-    public static void drawMap() {
-        JFrame map = new JFrame("Game Map");
-        map.setPreferredSize(new Dimension(100, 100));
-        map.setMinimumSize(new Dimension(100, 100));
-        map.setMaximumSize(new Dimension(100, 100));
-        map.setVisible(true);
-        map.setLocationRelativeTo(null);
-        map.setBackground(new java.awt.Color(11, 11, 11));
-        map.setForeground(new java.awt.Color(11, 11, 11));
-        map.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    }
-
     public static void main(String[] args) {
         HamiltonianCycle ham = new HamiltonianCycle(4, 5);
         int[] x = new int[20];
@@ -130,7 +118,7 @@ public class HamiltonianCycle {
         Date bef = new Date();
         ham.hamiltonian(1, x);
         Date aft = new Date();
-        System.out.println("How much did it take? : " + (aft.getTime() - bef.getTime()));
+        System.out.println("How much did it take? : " + (aft.getTime() - bef.getTime())+"ms");
         System.out.println("print in main");
 
         for (int i = 0; i < ham.hamiltonianCycleContainer.size(); i++) {
