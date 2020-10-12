@@ -113,6 +113,10 @@ public class HamiltonianCycle {
         n = scan.nextInt();
         System.out.println("enter the number of columns");
         m = scan.nextInt();
+        if(n*m<=1){
+            System.out.println("please try with valid numbers");
+            return;
+        }
         HamiltonianCycle ham = new HamiltonianCycle(n, m);
         int[] x = new int[n*m];
         x[0]=1;
