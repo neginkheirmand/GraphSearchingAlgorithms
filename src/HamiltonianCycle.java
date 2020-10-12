@@ -35,7 +35,11 @@ public class HamiltonianCycle {
 
         for (int i = 0; i < n * m; i++) {
             if (i == 0) {
-                System.out.println("\033[0;31m" + "   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20   agar ke n=4 va m=5" + "\033[0m");
+                System.out.printf("\033[0;31m" + "   ");
+                for(int j=0; j<n*m; j++){
+                    System.out.printf(""+(j+1)+" ");
+                }
+                System.out.println("\033[0m");
             }
             if (i < 9) {
                 System.out.printf(" ");
@@ -96,7 +100,7 @@ public class HamiltonianCycle {
                     }
                 }
                 if (!repet) {
-                    if (k + 1 < sizePath || (k == sizePath - 1 /*&& referenceMatrix[x[k] - 1][x[0] - 1] == 1*/ ) ) {
+                    if (k + 1 < sizePath || (k == sizePath - 1/* && referenceMatrix[x[k] - 1][x[0] - 1] == 1*/) ) {
                         return;
                     }
                 }
@@ -117,10 +121,10 @@ public class HamiltonianCycle {
     }
 
     public static void main(String[] args) {
-        HamiltonianCycle ham = new HamiltonianCycle(3, 5);
-        int[] x = new int[15];
+        HamiltonianCycle ham = new HamiltonianCycle(4, 5);
+        int[] x = new int[20];
         x[0]=1;
-        for(int i=1; i<15; i++){
+        for(int i=1; i<20; i++){
             x[i]=0;
         }
         Date bef = new Date();
@@ -133,6 +137,7 @@ public class HamiltonianCycle {
             for (int j = 0; j < ham.n * ham.m; j++) {
                 System.out.printf("%d ", ham.hamiltonianCycleContainer.get(i)[j]);
             }
+//            System.out.printf( "%d\n",i+1);
             System.out.println();
         }
     }
